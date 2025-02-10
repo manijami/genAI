@@ -3,5 +3,4 @@ pinecone-client
 langchain
 langchain-community
 langchain-huggingface
-dotenv
 PyMuPDF
