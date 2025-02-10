@@ -1,19 +1,17 @@
 
-from pinecone import Pinecone, ServerlessSpec 
-from dotenv import load_dotenv
+from pinecone import Pinecone, ServerlessSpec  
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.chains import RetrievalQA 
 #from langchain.vectorstores import Pinecone  # ✅ Correct Import
 
-import os
-load_dotenv()
-groq_api_key = os.environ['GROQ_API_KEY']
+
+groq_api_key = "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"
 
 
   
 
-os.environ['HF_TOKEN']=os.getenv("HF_TOKEN")
-PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")  # ✅ Correct
+ 
+PINECONE_API_KEY = "pcsk_2vt4pm_N1aMKkEqkKnVdvqA8V4yp8PLpAQnV45Febmc5ThrApyMp8WUsGtHtev4NJj7uJn"  # ✅ Correct
 print(PINECONE_API_KEY)
 #PINECONE_API_KEY = os.environ('PINECONE_API_KEY')  # Set this in your environment
 PINECONE_ENV = "us-east1-aws"  # Change based on your Pinecone setup
