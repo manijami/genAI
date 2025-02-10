@@ -56,6 +56,57 @@ llm = ChatGroq(groq_api_key=groq_api_key, model_name=st.session_state.selected_m
 
 
 from langchain_core.prompts import ChatPromptTemplate
+prompt_templates = {
+    "Standard Answer": ChatPromptTemplate.from_template(
+        """
+        Answer the questions based on the provided context only.
+        Please provide the most accurate response based on the question.
+        <context>
+        {context}
+        </context>
+        Question: {input}
+        """
+    ),
+    "Detailed Explanation": ChatPromptTemplate.from_template(
+        """
+        Provide a detailed explanation using the context provided.
+        If the context does not contain relevant information, state that explicitly.
+        <context>
+        {context}
+        </context>
+        Question: {input}
+        """
+    ),
+    "Concise Summary": ChatPromptTemplate.from_template(
+        """
+        Provide a short and precise summary as an answer.
+        Use only relevant information from the given context.
+        <context>
+        {context}
+        </context>
+        Question: {input}
+        """
+    ),
+    "Creative Answer": ChatPromptTemplate.from_template(
+        """
+        Generate a creative and engaging response based on the given context.
+        You may rephrase and enhance the details while maintaining accuracy.
+        <context>
+        {context}
+        </context>
+        Question: {input}
+        """
+    )
+}
+selected_prompt_name = st.selectbox("Select a Prompt Template:", list(prompt_templates.keys()))
+
+# Store selected prompt in session_state
+if "selected_prompt" not in st.session_state or st.session_state.selected_prompt != selected_prompt_name:
+    st.session_state.selected_prompt = selected_prompt_name
+    
+selected_prompt = prompt_templates[st.session_state.selected_prompt]
+
+
 prompt = ChatPromptTemplate.from_template(
     """
     Answer the questions based on the provided context only.
@@ -69,7 +120,7 @@ prompt = ChatPromptTemplate.from_template(
 
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains import create_retrieval_chain
-document_chain = create_stuff_documents_chain(llm, prompt)
+document_chain = create_stuff_documents_chain(llm, selected_prompt)
 retriever = vectorstore.as_retriever()
 retrieval_chain = create_retrieval_chain(retriever, document_chain)
 
