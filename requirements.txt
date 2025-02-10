@@ -5,3 +5,5 @@ langchain-community
 langchain-huggingface
 PyMuPDF
 langchain_pinecone
+langchain_groq
+langchain_core
